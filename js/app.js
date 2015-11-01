@@ -17,7 +17,7 @@ function renderPlayerIcon(number) {
 //When the user clicks on a button, the game starts. insert button number into an array for person
 function renderPerson(number) {
 	var gameButton = document.getElementById(number); //find out which button was clicked
-	var personIcon = gameButton.src="yellow.png"; //set the image to that button
+	var personIcon = gameButton.src="./img/yellow.png"; //set the image to that button
 	person.push(number); //save number in array
 	return personIcon;
 }
@@ -30,7 +30,7 @@ function renderComputer(number) {
 	if (person.length >= 2 && loopThroughWinningRows(person) > 0) {
 		generatedButtonNumber = loopThroughWinningRows(person);
 		gameButton = document.getElementById(generatedButtonNumber);
-		computerIcon = gameButton.src="purple.png";
+		computerIcon = gameButton.src="./img/purple.png";
 		computer.push(generatedButtonNumber);
 		
 	// then try offensive strategy (return all 4 posible offensive positions and randomise them)
@@ -44,7 +44,7 @@ function renderComputer(number) {
 		} while (randomButtonNumber == number);
 		
 		gameButton = document.getElementById(randomButtonNumber);
-		computerIcon = gameButton.src="purple.png";
+		computerIcon = gameButton.src="./img/purple.png";
 	}
 
 	computer.push(randomButtonNumber);
