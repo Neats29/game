@@ -1,8 +1,8 @@
 //9 clickable boxes
 //have two playes, person and computer
 
-var person = [];
-var computer = [];
+var personsMoves = [];
+var computersMoves = [];
 
 var winningRows = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ];
 
@@ -18,7 +18,7 @@ function renderPlayerIcon(number) {
 function renderPerson(number) {
 	var gameButton = document.getElementById(number); //find out which button was clicked
 	var personIcon = gameButton.src="./img/yellow.png"; //set the image to that button
-	person.push(number); //save number in array
+	personsMoves.push(number); //save number in array
 	return personIcon;
 }
 
@@ -27,14 +27,14 @@ function renderComputer(number) {
 	var gameButton, randomButtonNumber, generatedButtonNumber, computerIcon;
 	
 	//first try defensive stretegy
-	if (person.length >= 2 && loopThroughWinningRows(person) > 0) {
-		generatedButtonNumber = loopThroughWinningRows(person);
+	if (personsMoves.length >= 2 && loopThroughWinningRows(personsMoves) > 0) {
+		generatedButtonNumber = loopThroughWinningRows(personsMoves);
 		gameButton = document.getElementById(generatedButtonNumber);
 		computerIcon = gameButton.src="./img/purple.png";
-		computer.push(generatedButtonNumber);
+		computersMoves.push(generatedButtonNumber);
 		
 	// then try offensive strategy (return all 4 posible offensive positions and randomise them)
-	} else if (person.length >= 2 && loopThroughWinningRows(person) === false) {
+	} else if (personsMoves.length >= 2 && loopThroughWinningRows(personsMoves) === false) {
 		return false;
 	
 	//The first go
@@ -47,7 +47,7 @@ function renderComputer(number) {
 		computerIcon = gameButton.src="./img/purple.png";
 	}
 
-	computer.push(randomButtonNumber);
+	computersMoves.push(randomButtonNumber);
 	return computerIcon;
 }
 
