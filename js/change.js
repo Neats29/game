@@ -6,7 +6,7 @@
 //    pairs: tenIndexArray
 //    
 //}
-
+console.log("occupiedPositions RIGHT NOW!!!!",occupiedPositions)
 
 var personsPositions = [];
 var computersPositions = [];
@@ -15,9 +15,9 @@ var personsIcon = "/img/yellow.png";
 var computersIcon = "/img/purple.png";
 
 var occupiedPositions = [];
-var freePositions = [true, true, true, true, true, true, true, true, true, true];
+//var freePositions = [true, true, true, true, true, true, true, true, true, true];
 
-
+var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 //render image when clicked
 function renderPlayerIcon(number) {
@@ -42,23 +42,29 @@ function renderPerson(number) {
 
 
 function renderComputer(number) {
-	var gameButton, PotentialButtonNum;
+	var gameButton, PotentialButtonNum, freePositions;
 	
-	//first try offensive stretegy
-	if (occupiedPositions.length > 3) {
+    //first offensive strategy: out of the avaible positions (6), create a row of 2: then randomise
+    if (occupiedPositions.length >= 3) {
+        
+        freePositions = allPositions.difference(occupiedPositions);
+        PotentialButtonNum = randomise(freePositions);
+        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
+        console.log("occupied when offensive but only 1 purple:", occupiedPositions)
+    
+    
+	//first try offensive strategy
+	} else if (occupiedPositions.length > 3) {
 		for (var i = 0; i < 10; i++) {
             console.log("computersPositions[i]",computersPositions[i])
             console.log("computersPositions[i+1]",computersPositions[i+1])
             PotentialButtonNum = 15 - (computersPositions[i] + computersPositions[i+1]); //only works when purple has 2 filled positions, no less no more
             console.log("offensive pair:", PotentialButtonNum)
-            var n = PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
-//            computersPositions.push(PotentialButtonNum);
-            occupiedPositions.push(PotentialButtonNum);
+            return PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
             console.log("occupied when offensive:", occupiedPositions)
-            return n;
         }
        
-    //defensive
+    //defensive strategy
     } else if (occupiedPositions.length >= 3) {
         for (var i = 0; i < 10; i++) {
             console.log("personsPositions[i]",personsPositions[i])
@@ -66,7 +72,8 @@ function renderComputer(number) {
             PotentialButtonNum = 15 - (personsPositions[i] + personsPositions[i+1]);
             console.log("defensive pair:", PotentialButtonNum)
             var n = PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
-            occupiedPositions.push(PotentialButtonNum);
+//            occupiedPositions.push(PotentialButtonNum);
+//            computersPositions.push(PotentialButtonNum);
             console.log("occupied when defensive:", occupiedPositions)
             return n;
         }
@@ -98,3 +105,29 @@ function changeButtonToIcon(player, buttonNumber) {
 
 //when computer is deciding to make a move:
 //check if 
+
+//To find free spaces (compare allPositions against occupiedPositions)
+Array.prototype.difference = function(a) {
+    return this.filter(function(i) {
+        return a.indexOf(i) < 0;
+        
+    });
+};
+
+
+//when computer is being offensive but only has 1 position, needs to pick a random number of 6 choices
+function randomise(arr) {
+  var currentIndex = arr.length, temporaryValue, randomIndex ;
+
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+
+  return arr;
+}
