@@ -1,14 +1,28 @@
+body {
+    background-color: #f1d65f;
+}
+
 .game-grid {
 	width: 250px;
+/*
+    margin: auto;
+    display: block;
+*/
 }
 
 .game-button {
 	width: 75px;
 	height: 100px;
+    border: solid 1.5px white;
 }
+
+.game-button:focus {outline:0;}
 /*
 
 #first {
 	height: 200px;
 	width:200px;
 }*/
+h2 {
+    color: #624eca;
+}
