@@ -41,17 +41,9 @@ function renderPerson(number) {
 function renderComputer(number) {
 	var gameButton, PotentialButtonNum, freePositions;
 	
-    //first offensive strategy: out of the avaible positions (6), create a row of 2: then randomise
-    if (occupiedPositions.length >= 3) {
-        
-        freePositions = allPositions.difference(occupiedPositions);
-        PotentialButtonNum = randomise(freePositions);
-        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
-        console.log("occupied when offensive but only 1 purple:", occupiedPositions)
-    
-    
 	//first try offensive strategy
-	} else if (occupiedPositions.length > 3) {
+	if (occupiedPositions.length > 3 ) {
+        console.log("OFFENSIVE AFTER 2 purples")
 		for (var i = 0; i < 10; i++) {
             console.log("computersPositions[i]",computersPositions[i])
             console.log("computersPositions[i+1]",computersPositions[i+1])
@@ -60,9 +52,11 @@ function renderComputer(number) {
             return PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
             console.log("occupied when offensive:", occupiedPositions)
         }
-       
+           
+        
     //defensive strategy
-    } else if (occupiedPositions.length >= 3) {
+    } else if (occupiedPositions.length >= 3 && computersPositions.length > 1) {
+        console.log("DEFENSIVE AFTER 2 purples")
         for (var i = 0; i < 10; i++) {
             console.log("personsPositions[i]",personsPositions[i])
             console.log("personsPositions[i+1]",personsPositions[i+1])
@@ -71,6 +65,28 @@ function renderComputer(number) {
             return PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
             console.log("occupied when defensive:", occupiedPositions)
         }
+        
+    //first offensive strategy: out of the avaible positions (6), create a row of 2: 
+        //from free positions, add, the first number with the computers position and check if total is 15, if not carry on with loop
+        
+    } else if (computersPositions.length === 1) {    
+        console.log("DEFENSIVE **ONE** purple")
+        freePositions = allPositions.difference(occupiedPositions);
+        console.log("FREE POSITIONS:", freePositions)
+//        for (var i = 0; i < 7; i++) {
+//            
+//            if (freePositions[i] + computersPositions[i] === 15) {
+//                return freePositions[i];
+//            } else {
+//                
+//            }
+//        }
+
+        PotentialButtonNum = randomise(freePositions);
+        PotentialButtonNum = PotentialButtonNum[0];
+        console.log("PotentialButtonNum:", PotentialButtonNum)
+        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
+        console.log("occupied when offensive but only 1 purple:", occupiedPositions)
         
 	//The first go
 	} else {
