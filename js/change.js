@@ -6,7 +6,6 @@
 //    pairs: tenIndexArray
 //    
 //}
-console.log("occupiedPositions RIGHT NOW!!!!",occupiedPositions)
 
 var personsPositions = [];
 var computersPositions = [];
@@ -15,8 +14,6 @@ var personsIcon = "/img/yellow.png";
 var computersIcon = "/img/purple.png";
 
 var occupiedPositions = [];
-//var freePositions = [true, true, true, true, true, true, true, true, true, true];
-
 var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 //render image when clicked
@@ -24,7 +21,7 @@ function renderPlayerIcon(number) {
 	renderPerson(number);
     
     //create timed event to make the computer's move seem more realistic (otherwise the person's move and computer's would happen simultaneously)
-//    window.setTimeout(renderComputer(number), 7000);
+//   window.setTimeout(renderComputer(number), 7000);
     renderComputer(number)
 	console.log("occupied positions",  occupiedPositions);
 }
@@ -71,11 +68,8 @@ function renderComputer(number) {
             console.log("personsPositions[i+1]",personsPositions[i+1])
             PotentialButtonNum = 15 - (personsPositions[i] + personsPositions[i+1]);
             console.log("defensive pair:", PotentialButtonNum)
-            var n = PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
-//            occupiedPositions.push(PotentialButtonNum);
-//            computersPositions.push(PotentialButtonNum);
+            return PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
             console.log("occupied when defensive:", occupiedPositions)
-            return n;
         }
         
 	//The first go
@@ -84,8 +78,7 @@ function renderComputer(number) {
 			PotentialButtonNum = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
 		} while (PotentialButtonNum == number);
 		
-		gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum); //turn these two lines into a fucntion
-		
+		gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
 	}
 
     computersPositions.push(PotentialButtonNum);
@@ -98,13 +91,13 @@ function renderComputer(number) {
 }
 
 
+
+
 function changeButtonToIcon(player, buttonNumber) {
     return player == personsIcon ? document.getElementById(buttonNumber).setAttribute("src", "/img/yellow.png") :     document.getElementById(buttonNumber).setAttribute("src", "/img/purple.png")
 }
 
 
-//when computer is deciding to make a move:
-//check if 
 
 //To find free spaces (compare allPositions against occupiedPositions)
 Array.prototype.difference = function(a) {
