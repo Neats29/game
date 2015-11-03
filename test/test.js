@@ -12,7 +12,7 @@ QUnit.test("Are there 9 game buttons on the page", function(assert) {
 });
 
 
-QUnit.test("clearBoeard function works", function(assert) {
+QUnit.test("clearBoard function works", function(assert) {
 //    var replay = doc.getElementById("replay");
     
     var gameButton;

@@ -1,6 +1,5 @@
 //refactor to make a person and computer constructor
 
-
 //var person = {
 //    positions: tenIndexArray,
 //    pairs: tenIndexArray
@@ -15,6 +14,10 @@ var computersIcon = "/img/purple.png";
 
 var occupiedPositions = [];
 var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+var personsWins = [];
+var computersWins = [];
+var ties = [];
 
 //render image when clicked
 function renderPlayerIcon(number) {
@@ -107,7 +110,7 @@ function renderComputer(number) {
 }
 
 
-
+//set all buttons to no image
 function clearBoard() {
     for (var i = 1; i < 10; i++) {
         var gameButton = document.getElementById(i).setAttribute("src", "");
@@ -115,13 +118,17 @@ function clearBoard() {
     return gameButton;
 }
 
-
+//clear the board and empty the arrays
 function replay() {
     clearBoard()
     personsPositions = [];
     computersPositions = [];
     occupiedPositions = [];
 }
+
+
+//need a function to determin the status of the game
+//look at the computer positions and person positions arrays 
 
 
 function changeButtonToIcon(player, buttonNumber) {
@@ -134,6 +141,45 @@ function updatePositionsArrays(arr, value) {
     arr.push(value);
 }
 
+
+// to check for win calculate last 2 in computerpositions,
+// then 15 - (last 2 in computer) check if this n is in computerpositions
+function win(playersPositions, playersWins) {
+    
+   while (playersPositions.length > 2) {
+    playersPositions.shift();
+    }
+    var thirdOfaRow = 15 - (playersPositions[0] + playersPositions[1]);
+    if (playersPositions.indexOf(thirdOfaRow) >= 0) {
+        playersWins.push(true)
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+//function tie() {
+//    example, I start: 5, 7, 6, 4, 2, 8, 3, 9, 1
+//}
+
+function determinOutcome() {
+    //if true, need to make buttons unclickable (not done yet)
+    var personsScores = document.getElementById("persons-scores").innerHTML = personsWins.length;
+    var computersScores = document.getElementById("computers-scores").innerHTML = computersWins.length;
+    var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
+    return 
+    win(personsPositions, personsWins) ? personsScores : 
+    win(computersPositions, computersWins) ? computersScores :
+    "ties" ? tieScores : false;
+}
+
+
+
+
+
+
 //To find free spaces (compare allPositions against occupiedPositions)
 Array.prototype.difference = function(a) {
     return this.filter(function(i) {
@@ -143,6 +189,8 @@ Array.prototype.difference = function(a) {
 };
 
 
+
+//probably wont use this anymore 
 //when computer is being offensive but only has 1 position, needs to pick a random number of 6 choices
 function randomise(arr) {
   var currentIndex = arr.length, temporaryValue, randomIndex ;
