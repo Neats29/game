@@ -55,7 +55,7 @@ function renderComputer(number) {
            
         
     //defensive strategy
-    } else if (occupiedPositions.length >= 3 && computersPositions.length > 1) {
+    } else if (occupiedPositions.length > 2 && computersPositions.length > 1) {
         console.log("DEFENSIVE AFTER 2 purples")
         for (var i = 0; i < 10; i++) {
             console.log("personsPositions[i]",personsPositions[i])
