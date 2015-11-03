@@ -1,13 +1,20 @@
 body {
     background-color: #f1d65f;
+
 }
 
 .game-grid {
 	width: 250px;
-/*
+
+/*    box-shadow: 0px 20px 80px 2px #87719c;*/
+    padding: 0px;
     margin: auto;
     display: block;
-*/
+    
+}
+
+.game-button:focus {
+    outline: 0;
 }
 
 .game-button {
@@ -16,13 +23,34 @@ body {
     border: solid 1.5px white;
 }
 
-.game-button:focus {outline:0;}
-/*
-
-#first {
-	height: 200px;
-	width:200px;
-}*/
 h2 {
     color: #624eca;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#replay {
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 
+}
+
+#replay:hover {
+    cursor: pointer;
+}
+
+.replay-div button {
+    display: block;
+    margin: auto;
+}
+
+.replay-div {
+    margin-top: 20px;
+}
+
+
+.replay-div button:focus {
+    outline: 0;
 }
