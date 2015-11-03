@@ -73,6 +73,7 @@ function renderComputer(number) {
         console.log("DEFENSIVE **ONE** purple")
         freePositions = allPositions.difference(occupiedPositions);
         console.log("FREE POSITIONS:", freePositions)
+        
 //        for (var i = 0; i < 7; i++) {
 //            
 //            if (freePositions[i] + computersPositions[i] === 15) {
@@ -96,17 +97,32 @@ function renderComputer(number) {
 		
 		gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
 	}
-
-    computersPositions.push(PotentialButtonNum);
-    occupiedPositions.push(PotentialButtonNum);
+    
+    updatePositionsArrays(computersPositions, PotentialButtonNum);
+    updatePositionsArrays(occupiedPositions, PotentialButtonNum);
     console.log("occupied positions when computer goes",  occupiedPositions);
 
     console.log("PC positions", computersPositions);
-    
 	return gameButton;
 }
 
 
+
+function clearBoard() {
+    //setAttribute doesn't work on getElementsByClassName so have to loop to find the id;
+    for (var i = 1; i < 10; i++) {
+        var gameButton = document.getElementById(i).setAttribute("src", "");
+    }
+    return gameButton;
+}
+
+
+function replay() {
+    clearBoard()
+    personsPositions = [];
+    computersPositions = [];
+    occupiedPositions = [];
+}
 
 
 function changeButtonToIcon(player, buttonNumber) {
@@ -114,6 +130,10 @@ function changeButtonToIcon(player, buttonNumber) {
 }
 
 
+
+function updatePositionsArrays(arr, value) {
+    arr.push(value);
+}
 
 //To find free spaces (compare allPositions against occupiedPositions)
 Array.prototype.difference = function(a) {

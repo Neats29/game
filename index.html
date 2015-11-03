@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-<!--	<button id="replay" onclick="replay()">Replay</button>-->
     <h2>TicTacToe Minion Edition</h2>
 	<div class="game-grid">
         <input type="image" alt="8" class="game-button" id="8" onclick="renderPlayerIcon(8)" />
@@ -19,6 +18,11 @@
         <input type="image" alt="9" class="game-button" id="9" onclick="renderPlayerIcon(9)" />
         <input type="image" alt="2" class="game-button" id="2" onclick="renderPlayerIcon(2)" />
 	</div>
+    <div class="replay-div">
+	    <button id="replay" onclick="replay()">
+	        <img src="img/replay.svg">
+	    </button>
+    </div>
 <!--	<script data-main="js/app.js" src="js/require.js"></script>-->
 	<script data-main="js/change.js" src="js/require.js"></script>
 
