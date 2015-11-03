@@ -54,3 +54,8 @@ h2 {
 .replay-div button:focus {
     outline: 0;
 }
+
+.score div {
+    margin: auto;
+    display: block;
+}
