@@ -13,6 +13,10 @@ body {
     
 }
 
+.game-button:focus {
+    outline: 0;
+}
+
 .game-button {
 	width: 75px;
 	height: 100px;
@@ -44,4 +48,9 @@ h2 {
 
 .replay-div {
     margin-top: 20px;
+}
+
+
+.replay-div button:focus {
+    outline: 0;
 }
