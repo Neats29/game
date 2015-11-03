@@ -109,7 +109,6 @@ function renderComputer(number) {
 
 
 function clearBoard() {
-    //setAttribute doesn't work on getElementsByClassName so have to loop to find the id;
     for (var i = 1; i < 10; i++) {
         var gameButton = document.getElementById(i).setAttribute("src", "");
     }
