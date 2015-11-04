@@ -6,7 +6,7 @@
 //    
 //}
 
-var personsPositions = [];
+var personsPositions = [3, 5, 7];
 var computersPositions = [];
 
 var personsIcon = "/img/yellow.png";
@@ -22,10 +22,13 @@ var ties = [];
 //render image when clicked
 function renderPlayerIcon(number) {
 	renderPerson(number);
+    determinOutcome();
     
     //create timed event to make the computer's move seem more realistic (otherwise the person's move and computer's would happen simultaneously)
 //   window.setTimeout(renderComputer(number), 7000);
     renderComputer(number)
+    determinOutcome();
+
 	console.log("occupied positions",  occupiedPositions);
 }
 
@@ -114,9 +117,21 @@ function renderComputer(number) {
 function clearBoard() {
     for (var i = 1; i < 10; i++) {
         var gameButton = document.getElementById(i).setAttribute("src", "");
+        console.log(gameButton);
     }
     return gameButton;
 }
+
+
+
+function disableAllButtons() {
+    for (var i = 1; i < 10; i++) {
+        var gameButton = document.getElementById(i).setAttribute("disabled", "disabled");
+        console.log(gameButton);
+    }
+    return gameButton;
+}
+
 
 //clear the board and empty the arrays
 function replay() {
@@ -132,7 +147,8 @@ function replay() {
 
 
 function changeButtonToIcon(player, buttonNumber) {
-    return player == personsIcon ? document.getElementById(buttonNumber).setAttribute("src", "/img/yellow.png") :     document.getElementById(buttonNumber).setAttribute("src", "/img/purple.png")
+    var button = document.getElementById(buttonNumber).setAttribute("src", player);
+    return document.getElementById(buttonNumber).setAttribute("disabled", "disabled");
 }
 
 
@@ -160,9 +176,12 @@ function win(playersPositions, playersWins) {
 }
 
 
+
 //function tie() {
 //    example, I start: 5, 7, 6, 4, 2, 8, 3, 9, 1
 //}
+
+
 
 function determinOutcome() {
     //if true, need to make buttons unclickable (not done yet)
@@ -170,12 +189,11 @@ function determinOutcome() {
     var computersScores = document.getElementById("computers-scores").innerHTML = computersWins.length;
     var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
     return 
-    win(personsPositions, personsWins) ? personsScores : 
-    win(computersPositions, computersWins) ? computersScores :
-    "ties" ? tieScores : false;
+    win(personsPositions, personsWins) ? personsScores && disableAllButtons() : 
+    win(computersPositions, computersWins) ? computersScores && disableAllButtons() :
+    "ties" ? tieScores && disableAllButtons() : 
+    false;
 }
-
-
 
 
 
