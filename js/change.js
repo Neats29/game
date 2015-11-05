@@ -119,14 +119,13 @@ function renderComputer() {
 
 
 
-
-
-
 //set all buttons to no image
 function clearBoard() {
-    var gameButton;
+    var gameButton, nuller;
+
     for (var i = 1; i < 10; i++) {
-        gameButton = document.getElementById(i).setAttribute("src", "");
+        gameButton = document.getElementById(i).removeAttribute("src");
+        gameButton = document.getElementById(i).removeAttribute("disabled");
         console.log(gameButton);
     }
     return gameButton;
@@ -188,21 +187,21 @@ function win(playersPositions, playersWins) {
 
 
 
-//function tie() {
-//    example, I start: 5, 7, 6, 4, 2, 8, 3, 9, 1
-//}
-
+function tie() {
+    //this should be called after win() is called
+   return occupiedPositions.length === 9 ? ties.push(true) : false;
+}
 
 
 function determinOutcome() {
     //if true, need to make buttons unclickable (not done yet)
-    var personsScores = document.getElementById("persons-scores").innerHTML = personsWins.length;
-    var computersScores = document.getElementById("computers-scores").innerHTML = computersWins.length;
-    var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
-    return win(personsPositions, personsWins) ? personsScores && disableAllButtons() : 
-    win(computersPositions, computersWins) ? computersScores && disableAllButtons() :
-    "ties" ? tieScores && disableAllButtons() : 
-    false;
+        var personsScores = document.getElementById("persons-scores").innerHTML = personsWins.length;
+        var computersScores = document.getElementById("computers-scores").innerHTML = computersWins.length;
+        var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
+        return win(personsPositions, personsWins) ? personsScores : 
+        win(computersPositions, computersWins) ? computersScores :
+        tie() ? tieScores : 
+        false;
 }
 
 
