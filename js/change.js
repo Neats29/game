@@ -6,7 +6,7 @@
 //    
 //}
 
-var personsPositions = [];
+var personsPositions = [2];
 //var computersPositions = [4, 3, 5]; //example to test
 var computersPositions = [];
 
@@ -15,6 +15,7 @@ var computersIcon = "/img/purple.png";
 
 var occupiedPositions = [];
 var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5 , 4]];
 
 var personsWins = [];
 var computersWins = [];
@@ -60,20 +61,30 @@ function renderComputer() {
         //if true, the board needs to be disabled here as the computer would have won
            
         
-    //defensive strategy
-    } else if (occupiedPositions.length > 2 && computersPositions.length > 1) {
-        console.log("DEFENSIVE AFTER 2 purples");
-        for (var i = 0; i < 10; i++) {
-            console.log("personsPositions[i]",personsPositions[i]);
-            console.log("personsPositions[i+1]",personsPositions[i+1]);
-            PotentialButtonNum = 15 - (personsPositions[i] + personsPositions[i+1]);
-            console.log("defensive pair:", PotentialButtonNum);
-            return PotentialButtonNum !== occupiedPositions[i] ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
+    //offensive when computer has less than 2
+    } else if (computersPositions.length < 2) {
+      //go through array of array and find the number that matches persons move then remove one elemnt of that array so the array is 2 elemnts long
+        // then take the one next to it and place pc there
+        
+        for (var i = 0; i < winningPositions.length; i++) {
+            var innerLength = winningPositions[i].length;
+            var innerIndex = winningPositions[i][j];
+            for (var j = 0; j < innerLength; i++) {
+                console.log(winningPositions[i]);
+                if (winningPositions[i].indexOf(2) === 0) {
+                    winningPositions[i].pop();
+                    PotentialButtonNum = winningPositions[1];
+                } else if (winningPositions[i].indexOf(2) === 1) {
+                    winningPositions[i].pop();
+                    PotentialButtonNum = winningPositions[0];
+                }
+            }
         }
         
-    //first offensive strategy: out of the avaible positions (6), create a row of 2: 
-        //from free positions, add, the first number with the computers position and check if total is 15, if not carry on with loop
+        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
+        return gameButton;
         
+        //defensive
     } else if (computersPositions.length === 1) {    
         console.log("DEFENSIVE **ONE** purple");
         freePositions = allPositions.difference(occupiedPositions);
@@ -117,11 +128,9 @@ function renderComputer() {
 
 
 
-
-
 //set all buttons to no image
 function clearBoard() {
-    var gameButton, nuller;
+    var gameButton;
 
     for (var i = 1; i < 10; i++) {
         gameButton = document.getElementById(i).removeAttribute("src");
@@ -152,8 +161,6 @@ function replay() {
 }
 
 
-//need a function to determin the status of the game
-//look at the computer positions and person positions arrays 
 
 
 function changeButtonToIcon(player, buttonNumber) {
