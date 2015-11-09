@@ -6,126 +6,67 @@
 //    
 //}
 
-var personsPositions = [2];
-//var computersPositions = [4, 3, 5]; //example to test
-var computersPositions = [];
+var person1Positions = [];
+//var person2Positions = [4, 3, 5]; //example to test
+var person2Positions = [];
 
-var personsIcon = "/img/yellow.png";
-var computersIcon = "/img/purple.png";
+var person1Icon = "/img/yellow.png";
+var person2Icon = "/img/purple.png";
 
 var occupiedPositions = [];
 var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5 , 4]];
 
-var personsWins = [];
-var computersWins = [];
+var person1Wins = [];
+var person2Wins = [];
 var ties = [];
 
+var turn = null;
+
 //render image when clicked
-function renderPlayerIcon(number) {
-	renderPerson(number);
-    determinOutcome();
-    
-    //create timed event to make the computer's move seem more realistic (otherwise the person's move and computer's would happen simultaneously)
-//   window.setTimeout(renderComputer(number), 7000);
-    renderComputer();
-    determinOutcome();
+function renderPlayerIcon(buttonNumber) {
+    if (turn === null || 'PLAYER 1') {
+        renderPerson1(buttonNumber);
+        determinOutcome();
+        console.log(turn);
+    } else {
+        console.log("is it player 2?", turn);
+        renderPerson2(buttonNumber);
+        determinOutcome();
+    }
 
 	console.log("occupied positions",  occupiedPositions);
 }
 
 //Let the person go first
-function renderPerson(number) {
-	var personIcon = changeButtonToIcon(personsIcon, number);//set the image to that button
-    personsPositions.push(number);
-    occupiedPositions.push(number);
-    console.log("persons positions", personsPositions);
+function renderPerson1(buttonNumber) {
+	var personIcon = changeButtonToIcon(person1Icon, buttonNumber);//set the image to that button
+    person1Positions.push(buttonNumber);
+    occupiedPositions.push(buttonNumber);
+    console.log("person1 positions", person1Positions);
+    turn = 'PLAYER 2';
 	return personIcon;
 }
 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function renderComputer() {
-	var gameButton, PotentialButtonNum, freePositions;
+function renderPerson2(buttonNumber) {
+	var personIcon = changeButtonToIcon(person2Icon, buttonNumber);//set the image to that button
+    person2Positions.push(buttonNumber);
+    occupiedPositions.push(buttonNumber);
+    console.log("person2 positions", person2Positions);
+    turn = 'PLAYER 1';
+	return personIcon;
 	
-	//first try offensive strategy
-	if (computersPositions.length >= 2 ) {
-        
-         while (computersPositions.length > 2) {
-            computersPositions.shift();
-        }
-        console.log("computersPositions", computersPositions);
-        PotentialButtonNum = 15 - (computersPositions[0] + computersPositions[1]);
-        return occupiedPositions.indexOf(PotentialButtonNum) === -1 ? gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum) : false;
-        //if true, the board needs to be disabled here as the computer would have won
-           
-        
-    //offensive when computer has less than 2
-    } else if (computersPositions.length < 2) {
-      //go through array of array and find the number that matches persons move then remove one elemnt of that array so the array is 2 elemnts long
-        // then take the one next to it and place pc there
-        
-        for (var i = 0; i < winningPositions.length; i++) {
-            var innerLength = winningPositions[i].length;
-            var innerIndex = winningPositions[i][j];
-            for (var j = 0; j < innerLength; i++) {
-                console.log(winningPositions[i]);
-                if (winningPositions[i].indexOf(2) === 0) {
-                    winningPositions[i].pop();
-                    PotentialButtonNum = winningPositions[1];
-                } else if (winningPositions[i].indexOf(2) === 1) {
-                    winningPositions[i].pop();
-                    PotentialButtonNum = winningPositions[0];
-                }
-            }
-        }
-        
-        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
-        return gameButton;
-        
-        //defensive
-    } else if (computersPositions.length === 1) {    
-        console.log("DEFENSIVE **ONE** purple");
-        freePositions = allPositions.difference(occupiedPositions);
-        console.log("FREE POSITIONS:", freePositions);
-        
-//        for (var i = 0; i < 7; i++) {
-//            
-//            if (freePositions[i] + computersPositions[i] === 15) {
-//                return freePositions[i];
-//            } else {
-//                
-//            }
-//        }
-
-        PotentialButtonNum = randomise(freePositions);
-        PotentialButtonNum = PotentialButtonNum[0];
-        console.log("PotentialButtonNum:", PotentialButtonNum);
-        gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
-        console.log("occupied when offensive but only 1 purple:", occupiedPositions);
-        
-	} else {
-        return true;
-//		do {
-//			PotentialButtonNum = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-//		} while (PotentialButtonNum == number);
-//		
-//		gameButton = changeButtonToIcon(computersIcon, PotentialButtonNum);
-//	}
-//    
-    }
-    updatePositionsArrays(computersPositions, PotentialButtonNum);
-    updatePositionsArrays(occupiedPositions, PotentialButtonNum);
-    console.log("occupied positions when computer goes",  occupiedPositions);
-
-    console.log("PC positions", computersPositions);
-	return gameButton;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-
+function changeButtonToIcon(player, buttonNumber) {
+    document.getElementById(buttonNumber).setAttribute("src", player);
+    return document.getElementById(buttonNumber).setAttribute("disabled", "disabled");
+}
 
 
 //set all buttons to no image
@@ -155,18 +96,13 @@ function disableAllButtons() {
 //clear the board and empty the arrays
 function replay() {
     clearBoard();
-    personsPositions = [];
-    computersPositions = [];
+    person1Positions = [];
+    person2Positions = [];
     occupiedPositions = [];
 }
 
 
 
-
-function changeButtonToIcon(player, buttonNumber) {
-    document.getElementById(buttonNumber).setAttribute("src", player);
-    return document.getElementById(buttonNumber).setAttribute("disabled", "disabled");
-}
 
 
 
@@ -202,11 +138,11 @@ function tie() {
 
 function determinOutcome() {
     //if true, need to make buttons unclickable (not done yet)
-        var personsScores = document.getElementById("persons-scores").innerHTML = personsWins.length;
-        var computersScores = document.getElementById("computers-scores").innerHTML = computersWins.length;
+        var person1Scores = document.getElementById("person1-scores").innerHTML = person1Wins.length;
+        var person2Scores = document.getElementById("person2-scores").innerHTML = person2Wins.length;
         var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
-        return win(personsPositions, personsWins) ? personsScores : 
-        win(computersPositions, computersWins) ? computersScores :
+        return win(person1Positions, person1Wins) ? person1Scores : 
+        win(person2Positions, person2Wins) ? person2Scores :
         tie() ? tieScores : 
         false;
 }
