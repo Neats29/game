@@ -27,12 +27,12 @@ var turn = null;
 function renderPlayerIcon(buttonNumber) {
     if (turn === null || 'PLAYER 1') {
         renderPerson1(buttonNumber);
-        determinOutcome();
+//        determinOutcome();
         console.log(turn);
     } else {
         console.log("is it player 2?", turn);
         renderPerson2(buttonNumber);
-        determinOutcome();
+//        determinOutcome();
     }
 
 	console.log("occupied positions",  occupiedPositions);
@@ -105,7 +105,6 @@ function replay() {
 
 
 
-
 function updatePositionsArrays(arr, value) {
     arr.push(value);
 }
@@ -141,8 +140,11 @@ function determinOutcome() {
         var person1Scores = document.getElementById("person1-scores").innerHTML = person1Wins.length;
         var person2Scores = document.getElementById("person2-scores").innerHTML = person2Wins.length;
         var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
-        return win(person1Positions, person1Wins) ? person1Scores : 
-        win(person2Positions, person2Wins) ? person2Scores :
+        var p1PositionsClone = person1Positions.slice(0);
+        var p2PositionsClone = person2Positions.slice(0);
+    
+        return win(p1PositionsClone, person1Wins) ? person1Scores : 
+        win(p2PositionsClone, person2Wins) ? person2Scores :
         tie() ? tieScores : 
         false;
 }
