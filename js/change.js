@@ -25,11 +25,11 @@ var turn = 'PLAYER 1';
 //render image when clicked
 function renderPlayerIcon(buttonNumber) {
     if (turn === 'PLAYER 1') {
+        winTieOrContinue();
         renderPerson1(buttonNumber);
-        winTieOrContinue();
     } else {
-        renderPerson2(buttonNumber);
         winTieOrContinue();
+        renderPerson2(buttonNumber);
     }
     return winTieOrContinue();
 }
