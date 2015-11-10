@@ -1,8 +1,7 @@
 //refactor to make a person and computer constructor
 
 //var person = {
-//    positions: tenIndexArray,
-//    pairs: tenIndexArray
+//    positions: [],
 //    
 //}
 
@@ -21,21 +20,18 @@ var person1Wins = [];
 var person2Wins = [];
 var ties = [];
 
-var turn = null;
+var turn = 'PLAYER 1';
 
 //render image when clicked
 function renderPlayerIcon(buttonNumber) {
-    if (turn === null || 'PLAYER 1') {
+    if (turn === 'PLAYER 1') {
+        winTieOrContinue();
         renderPerson1(buttonNumber);
-//        determinOutcome();
-        console.log(turn);
     } else {
-        console.log("is it player 2?", turn);
+        winTieOrContinue();
         renderPerson2(buttonNumber);
-//        determinOutcome();
     }
-
-	console.log("occupied positions",  occupiedPositions);
+    return winTieOrContinue();
 }
 
 //Let the person go first
@@ -48,7 +44,10 @@ function renderPerson1(buttonNumber) {
 	return personIcon;
 }
 
-
+function winTieOrContinue() {
+    return determinOutcome() !== false ? disableAllButtons() : false;
+    
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function renderPerson2(buttonNumber) {
@@ -87,7 +86,6 @@ function disableAllButtons() {
     var gameButton;
     for (var i = 1; i < 10; i++) {
         gameButton = document.getElementById(i).setAttribute("disabled", "disabled");
-        console.log(gameButton);
     }
     return gameButton;
 }
@@ -113,12 +111,12 @@ function updatePositionsArrays(arr, value) {
 // to check for win calculate last 2 in computerpositions,
 // then 15 - (last 2 in computer) check if this n is in computerpositions
 function win(playersPositions, playersWins) {
-    
-   while (playersPositions.length > 2) {
-    playersPositions.shift();
+    var playersPositionsClone = playersPositions.slice(0);
+   while (playersPositionsClone.length > 2) {
+    playersPositionsClone.shift();
     }
-    var thirdOfaRow = 15 - (playersPositions[0] + playersPositions[1]);
-    if (playersPositions.indexOf(thirdOfaRow) >= 0) {
+    var thirdOfaRow = 15 - (playersPositionsClone[0] + playersPositionsClone[1]);
+    if (thirdOfaRow !== playersPositionsClone[0] && thirdOfaRow !== playersPositionsClone[1] && playersPositions.indexOf(thirdOfaRow) >= 0) {
         playersWins.push(true);
         return true;
     }
@@ -130,21 +128,17 @@ function win(playersPositions, playersWins) {
 
 
 function tie() {
-    //this should be called after win() is called
    return occupiedPositions.length === 9 ? ties.push(true) : false;
 }
 
 
 function determinOutcome() {
-    //if true, need to make buttons unclickable (not done yet)
         var person1Scores = document.getElementById("person1-scores").innerHTML = person1Wins.length;
         var person2Scores = document.getElementById("person2-scores").innerHTML = person2Wins.length;
-        var tieScores = document.getElementById("tie-scores").innerHTML = ties.length;
-        var p1PositionsClone = person1Positions.slice(0);
-        var p2PositionsClone = person2Positions.slice(0);
+        var tieScores     = document.getElementById("tie-scores").innerHTML = ties.length;
     
-        return win(p1PositionsClone, person1Wins) ? person1Scores : 
-        win(p2PositionsClone, person2Wins) ? person2Scores :
+        return win(person1Positions, person1Wins) ? person1Scores : 
+        win(person2Positions, person2Wins) ? person2Scores :
         tie() ? tieScores : 
         false;
 }
