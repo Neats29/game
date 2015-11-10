@@ -6,7 +6,6 @@
 //}
 
 var person1Positions = [];
-//var person2Positions = [4, 3, 5]; //example to test
 var person2Positions = [];
 
 var person1Icon = "/img/yellow.png";
@@ -14,7 +13,7 @@ var person2Icon = "/img/purple.png";
 
 var occupiedPositions = [];
 var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5 , 4]];
+var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5, 4]];
 
 var person1Wins = [];
 var person2Wins = [];
@@ -25,11 +24,11 @@ var turn = 'PLAYER 1';
 //render image when clicked
 function renderPlayerIcon(buttonNumber) {
     if (turn === 'PLAYER 1') {
-        winTieOrContinue();
         renderPerson1(buttonNumber);
+		console.log("wins p1:", person1Wins)
     } else {
-        winTieOrContinue();
         renderPerson2(buttonNumber);
+		console.log("wins p2:", person2Wins)
     }
     return winTieOrContinue();
 }
@@ -49,7 +48,6 @@ function winTieOrContinue() {
     
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function renderPerson2(buttonNumber) {
 	var personIcon = changeButtonToIcon(person2Icon, buttonNumber);//set the image to that button
     person2Positions.push(buttonNumber);
@@ -57,10 +55,8 @@ function renderPerson2(buttonNumber) {
     console.log("person2 positions", person2Positions);
     turn = 'PLAYER 1';
 	return personIcon;
-	
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
 
 function changeButtonToIcon(player, buttonNumber) {
     document.getElementById(buttonNumber).setAttribute("src", player);
@@ -101,13 +97,6 @@ function replay() {
 
 
 
-
-
-function updatePositionsArrays(arr, value) {
-    arr.push(value);
-}
-
-
 // to check for win calculate last 2 in computerpositions,
 // then 15 - (last 2 in computer) check if this n is in computerpositions
 function win(playersPositions, playersWins) {
@@ -118,31 +107,29 @@ function win(playersPositions, playersWins) {
     var thirdOfaRow = 15 - (playersPositionsClone[0] + playersPositionsClone[1]);
     if (thirdOfaRow !== playersPositionsClone[0] && thirdOfaRow !== playersPositionsClone[1] && playersPositions.indexOf(thirdOfaRow) >= 0) {
         playersWins.push(true);
+		console.log("playerwins at win():", playersWins)
         return true;
-    }
-    else {
-        return false;
     }
 }
 
 
 
 function tie() {
+	//will be checked AFTER win
    return occupiedPositions.length === 9 ? ties.push(true) : false;
 }
 
 
 function determinOutcome() {
-        var person1Scores = document.getElementById("person1-scores").innerHTML = person1Wins.length;
-        var person2Scores = document.getElementById("person2-scores").innerHTML = person2Wins.length;
-        var tieScores     = document.getElementById("tie-scores").innerHTML = ties.length;
-    
-        return win(person1Positions, person1Wins) ? person1Scores : 
-        win(person2Positions, person2Wins) ? person2Scores :
-        tie() ? tieScores : 
-        false;
-}
+	var person1Scores = document.getElementById("person1-scores").innerHTML = person1Wins.length;
+	var person2Scores = document.getElementById("person2-scores").innerHTML = person2Wins.length;
+	var tieScores     = document.getElementById("tie-scores").innerHTML = ties.length;
 
+	return win(person1Positions, person1Wins) ? person1Scores : 
+		win(person2Positions, person2Wins) ? person2Scores :
+		tie() ? tieScores :
+		false;
+}
 
 
 
@@ -158,18 +145,18 @@ Array.prototype.difference = function(a) {
 
 //probably wont use this anymore 
 //when computer is being offensive but only has 1 position, needs to pick a random number of 6 choices
-function randomise(arr) {
-  var currentIndex = arr.length, temporaryValue, randomIndex ;
-
-  while (0 !== currentIndex) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = arr[currentIndex];
-    arr[currentIndex] = arr[randomIndex];
-    arr[randomIndex] = temporaryValue;
-  }
-
-  return arr;
-}
+//function randomise(arr) {
+//  var currentIndex = arr.length, temporaryValue, randomIndex ;
+//
+//  while (0 !== currentIndex) {
+//
+//    randomIndex = Math.floor(Math.random() * currentIndex);
+//    currentIndex -= 1;
+//
+//    temporaryValue = arr[currentIndex];
+//    arr[currentIndex] = arr[randomIndex];
+//    arr[randomIndex] = temporaryValue;
+//  }
+//
+//  return arr;
+//}
