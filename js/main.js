@@ -24,9 +24,12 @@ var player = function(icon) {
 
 var player1 = player("/img/yellow.png");
 var player2 = player("/img/purple.png");
-
+player1.opponent = player2;
+player2.opponent = player1;
+nextPlayer = player1;
 
 function renderPlayerIcon(buttonNumber) {
+	
     nextPlayer.render(buttonNumber);
     return winTieOrContinue();
 }
@@ -34,17 +37,18 @@ function renderPlayerIcon(buttonNumber) {
 
 
 function playerGoesFirst(p) {
-    var change, keep;
+    var change, keep, user;
     if (p === 2) {
         change = document.getElementById("purple").style.color = "white";
         keep = document.getElementById("yellow").style.color = "black";
-		player1.opponent = player2;
+		user = player2;
     } else {
         change = document.getElementById("yellow").style.color = "white";
         keep = document.getElementById("purple").style.color = "black";
-		player2.opponent = player1;
+		user = player1;
     }
-    return nextPlayer;
+	nextPlayer = user;
+    return user;
 }
 
 
