@@ -14,7 +14,6 @@ QUnit.test("Are there 9 game buttons on the page", function(assert) {
 
 QUnit.test("clearBoard function works", function(assert) {
 //    var replay = doc.getElementById("replay");
-    
     var gameButton;
 	function clearBoard() {
     for (var i = 1; i < 10; i++) {

@@ -19,18 +19,19 @@
         <input type="image" alt="9" class="game-button" id="9" onclick="renderPlayerIcon(9)" />
         <input type="image" alt="2" class="game-button" id="2" onclick="renderPlayerIcon(2)" />
 	</div>
+    <p class="note">Click on player to change who goes first. By default, yellow goes first then players alternate.</p>
     <div class="score">
         <div>
-            <h3>Yellow</h3>
-            <p id="person1-scores">0</p>
+            <h3 id="yellow" onclick="playerGoesFirst(1)">Yellow</h3>
+            <p id="player1-scores">0</p>
         </div>
         <div>
             <h3>Ties</h3>
             <p id="tie-scores">0</p>
         </div>
         <div>
-            <h3>Purple</h3>
-            <p id="person2-scores">0</p> 
+            <h3 id="purple" onclick="playerGoesFirst(2)">Purple</h3>
+            <p id="player2-scores">0</p> 
         </div>
     </div>
     <div class="replay-div">
@@ -39,7 +40,7 @@
 	    </button>
     </div>
 <!--	<script data-main="js/app.js" src="js/require.js"></script>-->
-	<script data-main="js/change.js" src="js/require.js"></script>
+	<script data-main="js/main.js" src="js/require.js"></script>
 
 </body>
 </html>
