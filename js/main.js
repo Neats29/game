@@ -39,9 +39,9 @@ function renderPlayerIcon(buttonNumber) {
 
 function playerGoesFirst(p) {
     var user;
-    function changeColor(firstPlayer, secondPlayer) {
-        document.getElementById(firstPlayer).style.color = "white";
-        document.getElementById(secondPlayer).style.color = "black";
+    function changeColor(firstPlayerId, secondPlayerId) {
+        document.getElementById(firstPlayerId).style.color = "white";
+        document.getElementById(secondPlayerId).style.color = "black";
     }
     
     if (p === 2) {
