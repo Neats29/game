@@ -1,0 +1,27 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/main.js",
+  "directories": {
+    "test": "test/test.html",
+    "build": "browserify js/main.js -o js/bundle.js"
+  },
+  "dependencies": {
+    "browserify": "^12.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neats29/game.git"
+  },
+  "author": "Anita Amini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neats29/game/issues"
+  },
+  "homepage": "https://github.com/Neats29/game#readme"
+}
