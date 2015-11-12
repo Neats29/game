@@ -4,73 +4,51 @@ var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [
 
 var ties = [];
 var turn = 'PLAYER 1';
-
-
-var player1 = {
-    positions : [],
-    icon : "/img/yellow.png",
-    wins : [],
-    render : function(buttonNumber) {
-        var personIcon = changeButtonToIcon(player1.icon, buttonNumber);//set the image to that button
-        this.positions.push(buttonNumber);
-        occupiedPositions.push(buttonNumber);
-        turn = 'PLAYER 2';
-        return personIcon;
-    },
-    goesFirst : true
+var nextPlayer = null;
+	
+var player = function(icon) {
+	return {
+		positions : [],
+		wins : [],
+		opponent : null,
+		render : function(buttonNumber) {
+			var personIcon = changeButtonToIcon(icon, buttonNumber);//set the image to that button
+			this.positions.push(buttonNumber);
+			occupiedPositions.push(buttonNumber);
+			nextPlayer = this.opponent;
+			return personIcon;
+		}
+		
+	};
 };
 
+var player1 = player("/img/yellow.png");
+var player2 = player("/img/purple.png");
+player1.opponent = player2;
+player2.opponent = player1;
+nextPlayer = player1;
 
-var player2 = {
-    positions : [],
-    icon : "/img/purple.png",
-    wins : [],
-    render : function(buttonNumber) {
-        var personIcon = changeButtonToIcon(player2.icon, buttonNumber);//set the image to that button
-        this.positions.push(buttonNumber);
-        occupiedPositions.push(buttonNumber);
-        turn = 'PLAYER 1';
-        return personIcon;
-    },
-    goesFirst : false
-};
-
-
-
-//render image when clicked
 function renderPlayerIcon(buttonNumber) {
-    if (turn === 'PLAYER 1' && player1.goesFirst) {
-        player1.render(buttonNumber);
-        console.log("p1 click, p1 goes first ");
-    } else if (turn === 'PLAYER 2' && player1.goesFirst) {
-        player2.render(buttonNumber);
-        console.log("p2 click, p1 goes first ");
-    } else if (turn === 'PLAYER 1' && !player1.goesFirst) {
-        player2.render(buttonNumber);
-        console.log("p1 click, p2 goes first ");
-    } else {
-        player1.render(buttonNumber);
-        console.log("p2 click, p2 goes first ");
-    }
+	
+    nextPlayer.render(buttonNumber);
     return winTieOrContinue();
 }
 
 
 
 function playerGoesFirst(p) {
-    var change, keep;
+    var change, keep, user;
     if (p === 2) {
         change = document.getElementById("purple").style.color = "white";
         keep = document.getElementById("yellow").style.color = "black";
-        player2.goesFirst = true;
-        player1.goesFirst = false;
+		user = player2;
     } else {
         change = document.getElementById("yellow").style.color = "white";
         keep = document.getElementById("purple").style.color = "black";
-        player2.goesFirst = false;
-        player1.goesFirst = true;
+		user = player1;
     }
-    return change;
+	nextPlayer = user;
+    return user;
 }
 
 
@@ -145,13 +123,13 @@ function tie() {
 
 
 function determinOutcome() {
-	var person1Scores = document.getElementById("player1-scores").innerHTML = player1.wins.length;
-	var person2Scores = document.getElementById("player2-scores").innerHTML = player2.wins.length;
-	var tieScores     = document.getElementById("tie-scores").innerHTML = ties.length;
-
-	return win(player1.positions, player1.wins) ? person1Scores : 
-		win(player2.positions, player2.wins) ? person2Scores :
-		tie() ? tieScores :
+	var scores = function(id, array) { 
+		document.getElementById(id).innerHTML = array.length;
+	}
+	
+	return win(player1.positions, player1.wins) ? scores("player1-scores", player1.wins) : 
+		win(player2.positions, player2.wins) ? scores("player2-scores", player2.wins) :
+		tie() ? scores("tie-scores", ties) :
 		false;
 }
 
