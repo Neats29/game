@@ -145,3 +145,11 @@ Array.prototype.difference = function(a) {
         
     });
 };
+
+
+
+
+
+
+//need a button to decide between hvh, hvc, cvc
+//
