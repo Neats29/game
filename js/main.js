@@ -10,6 +10,7 @@ var player = function(icon) {
 		positions : [],
 		wins : [],
 		opponent : null,
+        name: null,
 		render : function(buttonNumber) {
 			var personIcon = changeButtonToIcon(icon, buttonNumber);//set the image to that button
 			this.positions.push(buttonNumber);
@@ -23,9 +24,11 @@ var player = function(icon) {
 
 var player1 = player("/img/yellow.png");
 var player2 = player("/img/purple.png");
+
 player1.opponent = player2;
 player2.opponent = player1;
 nextPlayer = player1;
+
 
 function renderPlayerIcon(buttonNumber) {
     nextPlayer.render(buttonNumber);
@@ -36,9 +39,9 @@ function renderPlayerIcon(buttonNumber) {
 
 function playerGoesFirst(p) {
     var user;
-    function changeColor(firstPlayer, secondPlayer) {
-        document.getElementById(firstPlayer).style.color = "white";
-        document.getElementById(secondPlayer).style.color = "black";
+    function changeColor(firstPlayerId, secondPlayerId) {
+        document.getElementById(firstPlayerId).style.color = "white";
+        document.getElementById(secondPlayerId).style.color = "black";
     }
     
     if (p === 2) {
@@ -74,7 +77,6 @@ function clearBoard() {
     for (var i = 1; i < 10; i++) {
         gameButton = document.getElementById(i).removeAttribute("src");
         gameButton = document.getElementById(i).removeAttribute("disabled");
-        console.log(gameButton);
     }
     return gameButton;
 }
