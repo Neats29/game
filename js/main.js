@@ -1,9 +1,8 @@
-var occupiedPositions = [];
-var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5, 4]];
+//var allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//var winningPositions = [[8, 1, 6], [3, 5, 7], [4, 9, 2], [8, 3, 4], [1, 5, 9], [6, 7, 2], [8, 5, 2], [6, 5, 4]];
 
+var occupiedPositions = [];
 var ties = [];
-var turn = 'PLAYER 1';
 var nextPlayer = null;
 	
 var player = function(icon) {
@@ -29,7 +28,6 @@ player2.opponent = player1;
 nextPlayer = player1;
 
 function renderPlayerIcon(buttonNumber) {
-	
     nextPlayer.render(buttonNumber);
     return winTieOrContinue();
 }
@@ -37,18 +35,21 @@ function renderPlayerIcon(buttonNumber) {
 
 
 function playerGoesFirst(p) {
-    var change, keep, user;
+    var user;
+    function changeColor(firstPlayer, secondPlayer) {
+        document.getElementById(firstPlayer).style.color = "white";
+        document.getElementById(secondPlayer).style.color = "black";
+    }
+    
     if (p === 2) {
-        change = document.getElementById("purple").style.color = "white";
-        keep = document.getElementById("yellow").style.color = "black";
+        changeColor("purple", "yellow");
 		user = player2;
     } else {
-        change = document.getElementById("yellow").style.color = "white";
-        keep = document.getElementById("purple").style.color = "black";
+        changeColor("yellow", "purple");
 		user = player1;
     }
 	nextPlayer = user;
-    return user;
+    return nextPlayer;
 }
 
 
