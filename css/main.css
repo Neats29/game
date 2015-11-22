@@ -42,7 +42,7 @@ h2 {
     padding: 10px;
 }
 
-#replay:hover {
+#replay:hover, #change-player-type:hover {
     cursor: pointer;
     box-shadow: 3px 3px 3px 1px #636363;
 }
@@ -52,12 +52,8 @@ h2 {
     margin: auto;
 }
 
-.replay-div {
-    margin-top: 20px;
-}
 
-
-.replay-div button:focus {
+.score button:focus, #change-player-type:focus {
     outline: 0;
 }
 
@@ -77,16 +73,27 @@ h2 {
 }
 
 .score p {
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
 }
 
 .score div {
     display: inline-block;
-    margin: 20px 30px 0px;
+    margin: 0 20px;
 }
 
 #purple:hover, #yellow:hover {
     cursor: pointer;
+}
+
+#change-player-type {
+	background-color: #383738;
+	color: white;
+	margin-bottom: 15px;
+	border: none;
+	padding: 10px;
+	width: 150px;
+	font-size: .7em;
+	
 }
 
