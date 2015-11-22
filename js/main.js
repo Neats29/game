@@ -5,7 +5,7 @@ var occupiedPositions = [];
 var ties = [];
 var nextPlayer = null;
 	
-var computer = true;
+var isComputer = false;
 
 var player = function(icon, isAI) {
 	return {
@@ -15,11 +15,12 @@ var player = function(icon, isAI) {
 		render : function(buttonNumber) {
 			if (isAI){
 				buttonNumber = calculateMove();
+			} else {
+				this.positions.push(buttonNumber);
+				occupiedPositions.push(buttonNumber);
+				nextPlayer = this.opponent;
 			}
 			var personIcon = changeButtonToIcon(icon, buttonNumber);//set the image to that button
-			this.positions.push(buttonNumber);
-			occupiedPositions.push(buttonNumber);
-			nextPlayer = this.opponent;
 			return personIcon;
 		}
 		
@@ -34,11 +35,11 @@ player2.opponent = player1;
 nextPlayer = player1;
 
 function renderPlayerIcon(buttonNumber) {
-	if (computer) {
+	console.log(computer)
+	if (isComputer) {
 		player1.render(buttonNumber);
-		computer.render(buttonNumber)
+		computer.render(buttonNumber);
 	} else {
-		
     nextPlayer.render(buttonNumber);
 	}
     return winTieOrContinue();
@@ -53,7 +54,7 @@ function playerGoesFirst(p) {
         document.getElementById(secondPlayer).style.color = "black";
     }
     
-    if (p === 2) {
+    if (p.innerHTML === 'Purple') {
         changeColor("purple", "yellow");
 		user = player2;
     } else {
@@ -64,6 +65,18 @@ function playerGoesFirst(p) {
     return nextPlayer;
 }
 
+
+function changePlayerType(button) {
+	console.log(button)
+	if ( button.value === 'Human Vs Human') {
+		button.value = 'Human Vs Computer';
+		isComputer = true;
+	} else {
+		button.value = 'Human Vs Human';
+		isComputer = false;
+	}
+	
+}
 
 
 function winTieOrContinue() {
@@ -199,7 +212,7 @@ function calculateMove() {
 					btnNum = twoInARow[i].m;
 				} else if (player1Posi.toString() === twoInARow[i].t){
 					btnNum = twoInARow[i].m;
-				}
+				} //need a case for when neither player is 2 in a row
 			}
 		}
 	}

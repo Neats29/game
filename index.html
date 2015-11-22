@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>TicTacToe</title>
     <link rel="stylesheet" href="css/main.css">
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h2>TicTacToe Minion Edition</h2>
@@ -21,8 +21,11 @@
 	</div>
     <p class="note">Click on player to change who goes first. By default, yellow goes first then players alternate.</p>
     <div class="score">
+       <div class="replay-div">
+        <input type="button" id="change-player-type" onclick="changePlayerType(this)" value="Human Vs Human"
+	    />
         <div>
-            <h3 id="yellow" onclick="playerGoesFirst(1)">Yellow</h3>
+            <h3 id="yellow" onclick="playerGoesFirst(this)">Yellow</h3>
             <p id="player1-scores">0</p>
         </div>
         <div>
@@ -30,14 +33,14 @@
             <p id="tie-scores">0</p>
         </div>
         <div>
-            <h3 id="purple" onclick="playerGoesFirst(2)">Purple</h3>
+            <h3 id="purple" onclick="playerGoesFirst(this)">Purple</h3>
             <p id="player2-scores">0</p> 
         </div>
     </div>
-    <div class="replay-div">
-        <button id="">Human Vs Human
-<!--	        <img src="img/replay.svg">-->
-	    </button>
+<!--
+		<button id="change-player-type" onclick="changePlayerType()">Human Vs Human
+	    </button>    
+-->
 	    <button id="replay" onclick="replay()">
 	        <img src="img/replay.svg">
 	    </button>
