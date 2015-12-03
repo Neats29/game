@@ -23,7 +23,6 @@ var player = function(icon, isAI) {
 			var personIcon = changeButtonToIcon(icon, buttonNumber);//set the image to that button
 			return personIcon;
 		}
-		
 	};
 };
 
@@ -174,29 +173,25 @@ var twoInARow = [
     ];
 
 function last2Positions(arr) {
+	var ClonedArr = cloneArray(arr)
 	while (arr.length > 2) {
-		var ClonedArr = cloneArray(arr)
-		console.log("TRIM")
 		ClonedArr.shift();
-		return ClonedArr.sort()
 	}
+	return ClonedArr.sort()
 }
 
 function randomise() {
 	var num;
 	do {
 		num = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-	} while (num = player1.positions[0]);
+	} while (num === player1.positions[0]);
 	return num;
 }
 
 function calculateMove() {
-	//search the winningrows against computerPositions
-	//score accordingly
 	var btnNum;
 	if (player1.positions.length < 2) {
-//		btnNum= randomise()
-		btnNum = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+		btnNum = randomise()
 		
 	} else {
 		last2Positions(player1.positions);
@@ -205,6 +200,8 @@ function calculateMove() {
 		var player1Posi = cloneArray(player1.positions);
 		computerPosi.sort();
 		player1Posi.sort();
+		
+		console.log("hit")
 		
 		for (var i = 0; i < twoInARow.length; i++){
 			for (var j = 0; j < twoInARow.length; j++) {
@@ -218,6 +215,8 @@ function calculateMove() {
 	}
 	return btnNum;
 }
+
+
 	
 
 
