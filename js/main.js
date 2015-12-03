@@ -172,6 +172,7 @@ var twoInARow = [
       {t:'5,6',m:4},{t:'4,6',m:5},{t:'4,5',m:6}, // second diagonal    
     ];
 
+//makes a copy and returns the last two indexes and sorts
 function last2Positions(arr) {
 	return arr.slice(-2).sort();
 }
