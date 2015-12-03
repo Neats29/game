@@ -173,11 +173,7 @@ var twoInARow = [
     ];
 
 function last2Positions(arr) {
-	var ClonedArr = cloneArray(arr)
-	while (arr.length > 2) {
-		ClonedArr.shift();
-	}
-	return ClonedArr.sort()
+	return arr.slice(-2).sort();
 }
 
 function randomise() {
