@@ -174,7 +174,9 @@ var twoInARow = [
 
 //makes a copy and returns the last two indexes and sorts
 function last2Positions(arr) {
-	return arr.slice(-2).sort();
+	return arr.slice(-2).sort(function(a, b){
+		return a - b;
+	});
 }
 
 function randomise() {
