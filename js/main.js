@@ -192,13 +192,9 @@ function calculateMove() {
 	if (player1.positions.length < 2) {
 		btnNum = randomise()
 		
-	} else {
-		last2Positions(player1.positions);
-		last2Positions(computer.positions);
-		var computerPosi = cloneArray(computer.positions);
-		var player1Posi = cloneArray(player1.positions);
-		computerPosi.sort();
-		player1Posi.sort();
+	} else {		
+		var computerPosi = last2Positions(player1.positions);
+		var player1Posi = last2Positions(computer.positions);
 		
 		console.log("hit")
 		
@@ -214,9 +210,6 @@ function calculateMove() {
 	}
 	return btnNum;
 }
-
-
-	
 
 
 //To find free spaces (compare allPositions against occupiedPositions)
